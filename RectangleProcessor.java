@@ -6,11 +6,10 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class RectangleProcessor {
-    public static int[][] pic = new int[32][32];
+    public static int[][] pic = new int[128][128];
     public static int[] colours;
     public static void main(String[] args){
 
-        int areaLeft = 64 * 64;
         int squareID = 1;
 
         for(int x = 0; x<pic.length; x++){
@@ -21,10 +20,10 @@ public class RectangleProcessor {
                         insertSquare(r1, x, y);
                         squareID++;
 
-                        for(int[] line : pic){
-                            System.out.println(Arrays.toString(line));
-                        }
-                        System.out.println();
+                        // for(int[] line : pic){
+                        //     System.out.println(Arrays.toString(line));
+                        // }
+                        // System.out.println();
                     }
                 }
             }
@@ -36,7 +35,7 @@ public class RectangleProcessor {
         }
         BufferedImage img = createImage();
         try{
-            File file = new File("C:/Users/ethan/Desktop/ImageSquares/image3.png");
+            File file = new File("Images/img2.png");
             ImageIO.write(img, "png", file);
         }
         catch(IOException e){
@@ -68,12 +67,47 @@ public class RectangleProcessor {
     }
 
     public static BufferedImage createImage(){
-        BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
-        for(int x = 0; x < 32; x++){
-            for(int y = 0; y < 32; y++){
+        BufferedImage img = new BufferedImage(pic.length, pic[0].length, BufferedImage.TYPE_INT_RGB);
+        for(int x = 0; x < pic.length; x++){
+            for(int y = 0; y < pic[0].length; y++){
                 img.setRGB(x, y, colours[pic[x][y]]);
             }
         }
         return img;
+    }
+
+    public double compareImage(BufferedImage img){
+        BufferedImage target = null;
+        try{
+        target = ImageIO.read(new File("Images/target.png"));
+        }
+        catch(IOException e){
+            System.out.println("poo poo 2");
+        }
+        double compTotal = 0;
+        for(int x = 0 ; x < img.getWidth(); x++){
+            for(int y = 0; y< img.getHeight(); y++){
+                comparePixel(img.getRGB(x, y), target.getRGB(x, y));
+            }
+        }
+        compTotal /= img.getWidth() *  img.getHeight();
+        return compTotal;
+    }
+
+    public double comparePixel(int img1, int img2){
+        int r1, r2, g1, g2, b1, b2;
+        int mask = 0xFF;
+        b1 = img1 & mask;
+        b2 = img2 & mask;
+
+        g1 = (img1 & mask << 8) >> 8;
+        g2 = (img2 & mask << 8) >> 8;
+
+        r1 = (img1 & mask << 16) >> 16;
+        r2 = (img2 & mask << 16) >> 16;
+        double distance = Math.sqrt((b1 - b2)^2 + (g1 - g2)^2 + (r1 - r2)^2);
+        distance /= Math.sqrt(255^2 + 255^2 + 255^2);
+
+        return distance;
     }
 }
