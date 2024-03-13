@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 public class ComparisonTest{
     public static void main(String[] args){
         try{
-            BufferedImage img = ImageIO.read(new File("Images/img1.png"));
+            BufferedImage img = ImageIO.read(new File("Images/img2.png"));
             System.out.println(compareImage(img));
         }
         catch(IOException e){
@@ -18,7 +18,7 @@ public class ComparisonTest{
     public static double compareImage(BufferedImage img){
         BufferedImage target = null;
         try{
-        target = ImageIO.read(new File("Images/img1.png"));
+        target = ImageIO.read(new File("Images/target.png"));
         }
         catch(IOException e){
             System.out.println("poo poo 2");
