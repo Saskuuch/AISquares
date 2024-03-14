@@ -5,6 +5,13 @@ public class ColourChromosome {
     public ColourChromosome(int[] chromosome){
         this.chromosome = chromosome;
     }
+    public ColourChromosome(int colours){
+        chromosome = new int[colours];
+        Random rn = new Random();
+        for(int x = 0; x< chromosome.length; x++){
+            chromosome[x] = rn.nextInt(Integer.MAX_VALUE);
+        }
+    }
     public int[] getChromosome(){
         return chromosome;
     }
