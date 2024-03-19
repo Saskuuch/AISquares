@@ -21,7 +21,7 @@ public class Algorithm {
         System.out.println(population[0].getCompareVal());
 
         try{
-            File file = new File("Images/AIfied.png");
+            File file = new File("Images/AIfied2.png");
             ImageIO.write(population[99].generateImage(), "png", file);
         }
         catch(IOException e){

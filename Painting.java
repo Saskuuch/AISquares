@@ -59,22 +59,32 @@ public class Painting  implements Comparable<Painting>{
     }
 
     public double compareImage(){
-        BufferedImage img = generateImage();
-        BufferedImage target = null;
-        try{
-        target = ImageIO.read(new File("Images/target.png"));
+
+//        BufferedImage img = generateImage();
+//        BufferedImage target = null;
+//        try{
+//        target = ImageIO.read(new File("Images/target.png"));
+//        }
+//        catch(IOException e){
+//            System.out.println("Wrong image");
+//        }
+//        double compTotal = 0;
+//        for(int x = 0 ; x < img.getWidth(); x++){
+//            for(int y = 0; y< img.getHeight(); y++){
+//                compTotal += comparePixel(img.getRGB(x, y), target.getRGB(x, y));
+//            }
+//        }
+//        compTotal /= img.getWidth() *  img.getHeight();
+
+        ImageCompare imageCompare = new ImageCompare(generateImage());
+        Thread thread = new Thread(imageCompare);
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        catch(IOException e){
-            System.out.println("Wrong image");
-        }
-        double compTotal = 0;
-        for(int x = 0 ; x < img.getWidth(); x++){
-            for(int y = 0; y< img.getHeight(); y++){
-                compTotal += comparePixel(img.getRGB(x, y), target.getRGB(x, y));
-            }
-        }
-        compTotal /= img.getWidth() *  img.getHeight();
-        return compTotal;
+        return imageCompare.getCompareVal();
     }
 
     public double comparePixel(int img1, int img2){
