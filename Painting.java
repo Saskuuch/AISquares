@@ -1,9 +1,4 @@
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.Executors;
-
-import javax.imageio.ImageIO;
 public class Painting  implements Comparable<Painting>{
     private ColourChromosome chromosome;
     private int[][] structure;
@@ -17,6 +12,7 @@ public class Painting  implements Comparable<Painting>{
     public Painting(ColourChromosome chromosome, int[][] structure){
         this.chromosome = chromosome;
         this.structure = structure;
+        mutate((float)0.01);
         this.compareVal = compareImage();
     }
 
@@ -50,7 +46,7 @@ public class Painting  implements Comparable<Painting>{
 
     public void mutate(float percentage){
         chromosome.mutate(percentage);
-        this.compareVal = compareImage();
+        // this.compareVal = compareImage();
     }
 
     public Painting crossbreed(Painting mother){

@@ -4,8 +4,8 @@ public class Rectangle {
     private int width, height, id;
     public Rectangle(int id){
         Random rn = new Random();
-        width = 32 / (1 << rn.nextInt(2, 5));
-        height = 32 / (1 << rn.nextInt(2, 5));
+        width = 64 / (1 << rn.nextInt(2, 6));
+        height = 64 / (1 << rn.nextInt(2, 6));
         this.id = id;
     }
 
