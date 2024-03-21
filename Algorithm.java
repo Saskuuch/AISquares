@@ -6,22 +6,34 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 public class Algorithm {
     public static void main(String[] args){
-        int[][] structure = new int[128][128];
+        int[][] structure = new int[213][299];
         int colourCount = createStructure(structure);
         Painting[] population = createPopulation(100, structure, colourCount);
         Arrays.sort(population);
         System.out.println(population[99].getCompareVal());
         System.out.println(population[0].getCompareVal());
 
-        for(int x = 0; x<1000; x++){
+        for(int x = 0; x<100; x++){
             generation(population);
         }
+        printSumary(population, 100);
+        for(int x = 0; x<400; x++){
+            generation(population);
+        }
+        printSumary(population, 500);
+        for(int x = 0; x<500; x++){
+            generation(population);
+        }
+        printSumary(population, 1000);
+    }
 
-        System.out.println(population[99].getCompareVal());
-        System.out.println(population[0].getCompareVal());
+    private static void printSumary(Painting[] population, int iterationNumber){
+        System.out.println("Iteration: " + iterationNumber);
+        System.out.println("Best: " + population[99].getCompareVal());
+        System.out.println("Worst: " + population[0].getCompareVal());
 
         try{
-            File file = new File("Images/AIfied3.png");
+            File file = new File("Images/AIDog" + iterationNumber + ".png");
             ImageIO.write(population[99].generateImage(), "png", file);
         }
         catch(IOException e){
