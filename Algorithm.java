@@ -13,18 +13,10 @@ public class Algorithm {
         System.out.println(population[99].getCompareVal());
         System.out.println(population[0].getCompareVal());
 
-        for(int x = 0; x<100; x++){
+        for(int x = 0; x<7000; x++){
             generation(population);
         }
-        printSumary(population, 100);
-        for(int x = 0; x<400; x++){
-            generation(population);
-        }
-        printSumary(population, 500);
-        for(int x = 0; x<500; x++){
-            generation(population);
-        }
-        printSumary(population, 1000);
+        printSumary(population, 7000);
     }
 
     private static void printSumary(Painting[] population, int iterationNumber){
