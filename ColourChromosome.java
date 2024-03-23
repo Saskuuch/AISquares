@@ -29,7 +29,21 @@ public class ColourChromosome {
         Random rn = new Random();
         for(int x = 0; x < chromosome.length; x++){
             if(rn.nextFloat(0,1) < percentage){
-                chromosome[x] = rn.nextInt(Integer.MAX_VALUE);
+                int rgb[] = new int[3];
+                int mask = 0xFF;
+                rgb[0] = chromosome[x] & mask;
+                rgb[1] = (chromosome[x] & mask << 8) >> 8;
+                rgb[2] = (chromosome[x] & mask << 16) >> 16;
+                for(int z = 0; z < rgb.length; z++){
+                    rgb[z] += rn.nextInt(-25, 25);
+                    if(rgb[z] > 255) rgb[z] = 255;
+                    else if (rgb[z] < 0) rgb[z] = 0;
+                }
+                int newColour = 0;
+                newColour = newColour | rgb[0];
+                newColour = newColour | rgb[1] << 8;
+                newColour = newColour | rgb[2] << 16;
+                chromosome[x] = newColour;
             }
         }
     }
