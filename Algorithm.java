@@ -19,14 +19,16 @@ public class Algorithm {
             addToCSV(population);
         }
         printSumary(population, 1000);
-//        for(int x = 0; x<3000; x++){
-//            generation(population);
-//        }
-//        printSumary(population, 4000);
-//        for(int x = 0; x<6000; x++){
-//            generation(population);
-//        }
-//        printSumary(population, 10000);
+       for(int x = 0; x<3000; x++){
+           generation(population);
+           addToCSV(population);
+       }
+       printSumary(population, 4000);
+       for(int x = 0; x<6000; x++){
+           generation(population);
+           addToCSV(population);
+       }
+       printSumary(population, 10000);
     }
 
     private static void printSumary(Painting[] population, int iterationNumber){
