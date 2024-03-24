@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
@@ -15,16 +16,17 @@ public class Algorithm {
 
         for(int x = 0; x<1000; x++){
             generation(population);
+            addToCSV(population);
         }
         printSumary(population, 1000);
-        for(int x = 0; x<3000; x++){
-            generation(population);
-        }
-        printSumary(population, 4000);
-        for(int x = 0; x<6000; x++){
-            generation(population);
-        }
-        printSumary(population, 10000);
+//        for(int x = 0; x<3000; x++){
+//            generation(population);
+//        }
+//        printSumary(population, 4000);
+//        for(int x = 0; x<6000; x++){
+//            generation(population);
+//        }
+//        printSumary(population, 10000);
     }
 
     private static void printSumary(Painting[] population, int iterationNumber){
@@ -37,7 +39,18 @@ public class Algorithm {
             ImageIO.write(population[99].generateImage(), "png", file);
         }
         catch(IOException e){
-            System.out.println("Poo Poo");
+            System.out.println("Image output error");
+        }
+    }
+
+    private static void addToCSV(Painting[] population){
+        try{
+            FileWriter writer = new FileWriter("Images/stats.csv", true);
+            writer.append(population[0].getCompareVal() + "," + population[99].getCompareVal() + "\n");
+            writer.close();
+        }
+        catch(IOException e){
+            System.out.println("Statistics file error");
         }
     }
 
