@@ -5,8 +5,8 @@ public class Rectangle {
     //Creates new rectangle in range 1-32 x 1-32
     public Rectangle(int id){
         Random rn = new Random();
-        width = 64 / (1 << rn.nextInt(2, 7));
-        height = 64 / (1 << rn.nextInt(2, 7));
+        width = 64 / (1 << rn.nextInt(1, 7));
+        height = 64 / (1 << rn.nextInt(1, 7));
         this.id = id;
     }
 

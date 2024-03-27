@@ -6,13 +6,13 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 public class Algorithm {
     //Current configuration
-    //Structure: 213x299
+    //Structure: 378x504
     //Population: 100
     //Mutation rate: 0.01
     //Crossover: Top 30
     public static void main(String[] args){
         //Structure initialization
-        int[][] structure = new int[213][299]; //Painting structure, needs to be same dimensions as target image
+        int[][] structure = new int[378][504]; //Painting structure, needs to be same dimensions as target image
         int colourCount = createStructure(structure);
 
         //Population initialization
@@ -109,7 +109,7 @@ public class Algorithm {
         System.out.println("Worst: " + population[0].getCompareVal());
 
         try{
-            File file = new File("Images/AIDog" + iterationNumber + ".png");
+            File file = new File("Images/PumpkinPatch" + iterationNumber + ".png");
             ImageIO.write(population[99].generateImage(), "png", file);
         }
         catch(IOException e){
