@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+//Deprecated, used for testing image comparison function
 public class ComparisonTest{
     public static void main(String[] args){
         try{
@@ -11,7 +12,7 @@ public class ComparisonTest{
             System.out.println(compareImage(img));
         }
         catch(IOException e){
-            System.out.println("poo poo 1");
+            System.out.println("Error importing image");
         }
     }
 
@@ -21,7 +22,7 @@ public class ComparisonTest{
         target = ImageIO.read(new File("Images/target.png"));
         }
         catch(IOException e){
-            System.out.println("poo poo 2");
+            System.out.println("Error importing target");
         }
         double compTotal = 0;
         for(int x = 0 ; x < img.getWidth(); x++){

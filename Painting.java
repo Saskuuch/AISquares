@@ -2,13 +2,9 @@ import java.awt.image.BufferedImage;
 public class Painting  implements Comparable<Painting>{
     private ColourChromosome chromosome;
     private int[][] structure;
-    private double compareVal;
+    private double compareVal; //Fitness score
 
-    @Override
-    public int compareTo(Painting o){
-        return Double.compare(1-compareVal, 1-o.getCompareVal());
-    }
-
+    //For creating child painting
     public Painting(ColourChromosome chromosome, int[][] structure){
         this.chromosome = chromosome;
         this.structure = structure;
@@ -16,21 +12,43 @@ public class Painting  implements Comparable<Painting>{
         this.compareVal = compareImage();
     }
 
-    //For creating a new painting
+    //For initialization
     public Painting(int[][] structure, int colours){
         this.structure = structure;
         this.chromosome = new ColourChromosome(colours);
         this.compareVal = compareImage();
     }
 
-    public ColourChromosome getChromosome(){
-        return chromosome;
+    //From Comparable, allows sorting array by comparison score
+    @Override
+    public int compareTo(Painting o){
+        return Double.compare(1-compareVal, 1-o.getCompareVal());
     }
-    public int[][] getStructure(){
-        return structure;
+
+    //Mutates painting
+    public void mutate(float percentage){
+        chromosome.mutate(percentage);
     }
-    public double getCompareVal(){
-        return compareVal;
+
+    //Creates child with second painting
+    public Painting crossbreed(Painting mother){
+        ColourChromosome childChromosome = chromosome.breed(mother.getChromosome());
+        return new Painting(childChromosome, structure);
+    }
+
+    //Compares to target image, giving fitness score
+    public double compareImage(){
+
+        //Runs comparison on new thread to speed up algorithm
+        ImageCompare imageCompare = new ImageCompare(generateImage());
+        Thread thread = new Thread(imageCompare);
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return imageCompare.getCompareVal();
     }
 
     //Paints the picture which can be turned into png
@@ -44,59 +62,17 @@ public class Painting  implements Comparable<Painting>{
         return img;
     }
 
-    public void mutate(float percentage){
-        chromosome.mutate(percentage);
-        // this.compareVal = compareImage();
+    //Getters
+    public ColourChromosome getChromosome(){
+        return chromosome;
+    }
+    public int[][] getStructure(){
+        return structure;
+    }
+    public double getCompareVal(){
+        return compareVal;
     }
 
-    public Painting crossbreed(Painting mother){
-        ColourChromosome childChromosome = chromosome.breed(mother.getChromosome());
-        return new Painting(childChromosome, structure);
-    }
 
-    public double compareImage(){
 
-//        BufferedImage img = generateImage();
-//        BufferedImage target = null;
-//        try{
-//        target = ImageIO.read(new File("Images/target.png"));
-//        }
-//        catch(IOException e){
-//            System.out.println("Wrong image");
-//        }
-//        double compTotal = 0;
-//        for(int x = 0 ; x < img.getWidth(); x++){
-//            for(int y = 0; y< img.getHeight(); y++){
-//                compTotal += comparePixel(img.getRGB(x, y), target.getRGB(x, y));
-//            }
-//        }
-//        compTotal /= img.getWidth() *  img.getHeight();
-
-        ImageCompare imageCompare = new ImageCompare(generateImage());
-        Thread thread = new Thread(imageCompare);
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        return imageCompare.getCompareVal();
-    }
-
-    public double comparePixel(int img1, int img2){
-        int r1, r2, g1, g2, b1, b2;
-        int mask = 0xFF;
-        b1 = img1 & mask;
-        b2 = img2 & mask;
-
-        g1 = (img1 & mask << 8) >> 8;
-        g2 = (img2 & mask << 8) >> 8;
-
-        r1 = (img1 & mask << 16) >> 16;
-        r2 = (img2 & mask << 16) >> 16;
-        double distance = Math.sqrt(Math.pow(b1 - b2, 2) + Math.pow(g1 - g2, 2) + Math.pow(r1 - r2, 2));
-        distance /= Math.sqrt(Math.pow(255, 2) + Math.pow(255, 2) + Math.pow(255, 2));
-
-        return distance;
-    }
 }
