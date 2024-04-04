@@ -109,7 +109,7 @@ public class Algorithm {
         System.out.println("Worst: " + population[0].getCompareVal());
 
         try{
-            File file = new File("Images/PumpkinPatch" + iterationNumber + ".png");
+            File file = new File("Images/Golden" + iterationNumber + ".png");
             ImageIO.write(population[99].generateImage(), "png", file);
         }
         catch(IOException e){
