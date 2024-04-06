@@ -12,7 +12,7 @@ public class Algorithm {
     //Crossover: Top 30
     public static void main(String[] args){
         //Structure initialization
-        int[][] structure = new int[605][807]; //Painting structure, needs to be same dimensions as target image
+        int[][] structure = new int[353][523]; //Painting structure, needs to be same dimensions as target image
         int colourCount = createStructure(structure);
 
         //Population initialization
