@@ -6,7 +6,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 public class Algorithm {
     //Current configuration
-    //Structure: 378x504
+    //Structure: 353x523
     //Population: 100
     //Mutation rate: 0.01
     //Crossover: Top 30
